@@ -7,12 +7,15 @@ TC:- O(N)
 """
 class Solution:
     def sumRootToLeaf(self, root: TreeNode, running_sum=0) -> int:
-        if not root:
-            return running_sum
-        running_sum = running_sum * 2 + root.val
-        if root.left or root.right:
-            x = self.sumRootToLeaf(root.left, running_sum)
-            y = self.sumRootToLeaf(root.right, running_sum)
-            return x + y
-        else:
-            return running_sum
+        def getSum(root,running_sum=0):
+            if(root == None):
+                return running_sum
+            else:
+                running_sum=running_sum*2+root.val
+                node=0
+                if(root.left):
+                    node+=getSum(root.left,running_sum)
+                if(root.right):
+                    node+=getSum(root.right,running_sum)
+                return running_sum if node==0 else node
+        return getSum(root)
